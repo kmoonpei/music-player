@@ -22,5 +22,12 @@
     "redux",
     "react-router",
     "webpack"
-  ]
+  ],
+  "proxy": {
+    "/kugou": {
+      "target": "http://m.kugou.com",
+      "changeOrigin": true,
+      "pathRewrite": {"^/kugou" : ""}
+    }
+  }
 }

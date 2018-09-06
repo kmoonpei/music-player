@@ -13,8 +13,15 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <button onClick={this.playPrev}>点击</button>
       </div>
     );
+  }
+
+  playPrev = () => {
+    fetch('/kugou/?json=true').then(response => {
+      console.log(response)
+    }).catch(err => ({ err }));
   }
 }
 
