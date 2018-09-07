@@ -1,0 +1,1 @@
+export const SAVE_RANKLIST = 'SAVE_RANKLIST';
