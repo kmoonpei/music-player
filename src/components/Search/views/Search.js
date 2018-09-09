@@ -10,7 +10,7 @@ export default class extends Component {
     render() {
         return (
             <div>
-                banner
+                搜索
             </div>
         )
     }

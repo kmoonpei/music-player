@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import User from './User';
+import New from './New';
 
 export default () => {
     return (
         <div>
-            <User />
+            <New />
         </div>
     )
 }
