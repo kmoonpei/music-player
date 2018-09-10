@@ -3,7 +3,7 @@
   padding: 0;
   font-family: sans-serif;
 }
-body {
+html {
   Font-size: 62.5%;
 }
 ul,ol,li {
@@ -14,18 +14,18 @@ ul,ol,li {
   justify-content: space-around;
 }
 .nav li {
-    height: 4em;
-    line-height: 4em;
-    /* padding: 0 2%; */
+  height: 4.4rem;
+  line-height: 4.4rem;
+  /* padding: 0 2%; */
 }
 .nav li.active {
-  box-shadow: inset 0px -2px 0px #e9203d;
+box-shadow: inset 0px -2px 0px #e9203d;
 }
 .nav li a {
-  color: #333;
-  font-size: 1.5em;
-  text-decoration: none;
+color: #333;
+font-size: 1.52rem;
+text-decoration: none;
 }
 .nav li a.active {
-  color: #e9203d;
+color: #e9203d;
 }
