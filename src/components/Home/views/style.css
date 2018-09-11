@@ -1,0 +1,67 @@
+.img_wrap {
+    /* width: 10rem; */
+    height: 9rem;
+}
+.img_banner {
+    width: 37.5rem;
+    height: 13.6rem;
+}
+.more_wrap {
+    display: flex;
+    flex-direction: row;
+}
+.more_txt {
+    font-size: 1.4rem;
+    margin: .5rem;
+}
+.arrow_right {
+    width: 1.5rem;
+    height: 2.6rem;
+    background: 50% 50% url(../../../static/img/arrow.png) no-repeat;
+    background-size: 90%;
+}
+.reconmmed_ul {
+    list-style: none;
+    padding: .4rem;
+}
+.recmmend_li {
+    position: relative;
+    width: 33.3333%;
+    float: left;
+    padding: .4rem;
+}
+.recmmend_li a {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.recmmend_li a img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+.recmmend_li a p {
+    padding: 5px;
+    overflow: hidden;
+    height: 2.8rem;
+    word-break: break-all;
+    font-size: 0.9rem;
+}
+.recmmend_li a div {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    right: 0;
+    top: 0;
+    padding: .2rem;
+}
+.recmmend_li a div img{
+    widows: 1.2rem;
+    height: 1.2rem;
+}
+.recmmend_li a div span{
+    color: #fff;
+    font-size: 100%;
+    margin-left: .2rem;
+}
