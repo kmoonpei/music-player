@@ -38,10 +38,10 @@ export default class extends Component {
             <Swiper
                 swiperOptions={{
                     scrollbarHide: true,
-                    scrollBar: true,
+                    // scrollBar: true,
                     loop: true,
-                    nextButton: null,
-                    preButton: null,
+                    // nextButton: null,
+                    // preButton: null,
                 }}
             >
                 {slides.map(slide => (

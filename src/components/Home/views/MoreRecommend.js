@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import API from '../../../utils/API';
+import {Link} from 'react-router-dom';
 
-export default class MoreRecommend extends Component {
+export default class extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,16 +19,13 @@ export default class MoreRecommend extends Component {
         try {
             let result = await fetch(`/kugou${API.recommend}`);
             let data = await result.json();
-            // console.log(data)
-            this.setState({ recommends: data.plist.list.info });
+            let showArr = data.plist.list.info.slice(0, 12);
+            this.setState({ recommends: showArr });
         } catch (err) {
             console.log('Error', err);
         }
     }
 
-    format(num) {
-        return num / 10000
-    }
     render() {
         let { recommends } = this.state
         console.log(recommends)
@@ -48,14 +46,16 @@ export default class MoreRecommend extends Component {
     }
     renderItem = (item, i) => {
         return (
-            <li key={i} className="recmmend_li">
+            <li key={item.specialid} className="recmmend_li">
                 <a>
-                    <img src={item.imgurl} />
-                    <p >{item.intro}</p>
-                    <div >
-                        <img src={require("../../../static/img/headset.png")} />
-                        <span >{`${this.format(item.playcount)}万`}</span>
-                    </div>
+                    <Link to={`/album/${item.specialid}`} >
+                        <img src={item.imgurl.replace(/\{size\}/g, 400)} />
+                        <p >{item.intro}</p>
+                        <div >
+                            <img src={require("../../../static/img/headset.png")} />
+                            <span >{`${(item.playcount / 10000).toFixed(2)}万`}</span>
+                        </div>
+                    </Link>
                 </a>
             </li>
         )

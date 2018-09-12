@@ -1,0 +1,25 @@
+.rank_wrap {
+    padding: 1rem;
+}
+.rank_wrap li {
+    width: 100%;
+}
+.rank_wrap li a {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: .1rem solid #adadad;
+}
+.rank_wrap li a .rank_cover {
+    width: 9rem;
+}
+.rank_wrap li a span{
+    font-size: 140%;
+    margin: 1rem;
+}
+.rank_wrap li a .rank_right_arrow {
+    position: absolute;
+    right: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}

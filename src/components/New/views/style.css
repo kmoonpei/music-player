@@ -1,0 +1,26 @@
+.new_song_wrap {
+ padding: 1rem;
+}
+.new_song_wrap li{
+    width: 100%;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 1rem;
+}
+.new_song_wrap li div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+
+}
+.new_song_wrap li div span{
+    flex: 8;
+    font-size: 140%;
+}
+.new_song_wrap li div a{
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    background: 50% 50% url(../../../static/img/notlove.png) no-repeat;
+    background-size: 60%;
+}

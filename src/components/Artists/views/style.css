@@ -1,0 +1,25 @@
+.artist_class_wrap {
+    padding: 1rem;
+}
+.class_li {
+    width: 100%;
+    margin-top: -.1rem;
+    border: .05rem solid #e2dfdf;
+}
+.artist_class_wrap .class_li:nth-child(3n+2){
+    margin-top: 2rem;
+}
+.artist_class_wrap li a {
+    display: flex;
+    align-items: center;
+}
+.artist_class_wrap li a span{
+    font-size: 140%;
+    margin: 1rem;
+}
+.artist_class_wrap li a img{
+    position: absolute;
+    right: 2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+}
