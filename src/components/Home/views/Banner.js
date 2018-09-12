@@ -45,7 +45,7 @@ export default class extends Component {
                 }}
             >
                 {slides.map(slide => (
-                    <Slide className="Demo-swiper__slide" key={slide.id} >
+                    <Slide className="Demo-swiper-slide" key={slide.id} >
                         {slide}
                     </Slide>
                 ))}

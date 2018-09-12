@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../../../utils/API';
+import HeadBar from '../../../../common/HeadBar';
 
 export class AlbumList extends Component {
     constructor(props) {
@@ -30,7 +31,9 @@ export class AlbumList extends Component {
             //         )
             //     })}
             // </ul>
-            <span>abulumList</span>
+            <div>
+                <HeadBar title={'歌单'}/>
+            </div>
         )
     }
 }
