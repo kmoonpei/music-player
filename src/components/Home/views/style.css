@@ -44,9 +44,9 @@
 .recmmend_li a p {
     padding: 5px;
     overflow: hidden;
-    height: 2.8rem;
+    height: 3.2rem;
     word-break: break-all;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 .recmmend_li a div {
     position: absolute;

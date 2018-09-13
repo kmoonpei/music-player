@@ -1,12 +1,12 @@
 * {
-  --themC: #209fe9;
+  --themC: #209fe9; /*定义变量*/
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   box-sizing: border-box;
 }
 html {
-  Font-size: 62.5%;
+    Font-size: 62.5%;
 }
 ul,ol,li {
   list-style: none;
@@ -15,28 +15,29 @@ a {
   text-decoration-line: none;
   color: #333;
 }
+
+/* 首页banner */
 .nav {
   display: flex;
   justify-content: space-around;
 }
-
 .nav li {
   height: 3.4rem;
   line-height: 3.4rem;
-  /* padding: 0 2%; */
 }
 .nav li.active {
-box-shadow: inset 0px -2px 0px #e9203d;
+  box-shadow: inset 0px -2px 0px #e9203d;
 }
 .nav li a {
-color: #333;
-font-size: 1.52rem;
-text-decoration: none;
+  color: #333;
+  font-size: 1.52rem;
+  text-decoration: none;
 }
 .nav li a.active {
 color: #e9203d;
 }
 
+/* 二级页面标题栏 */
 .headbar_wrap {
   position: relative;
   display: flex;
@@ -54,4 +55,57 @@ color: #e9203d;
 .headbar_wrap span{
   font-size: 140%;
   color: #fff;
+}
+
+/* 歌曲列表 */
+.new_song_wrap {
+  /* padding: 1rem; */
+ }
+.new_song_wrap li{
+  width: 100%;
+  border-bottom: 1px solid #d9d9d9;
+  padding: 1rem;
+}
+.song_item_wrap{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.rank_circle{
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  border-radius: 2rem;
+  margin-right: 1rem;
+  font-size: 140%;
+}
+.new_song_wrap li:nth-child(1) .rank_circle{
+  background-color: rgb(238, 25, 25);
+}
+.new_song_wrap li:nth-child(2) .rank_circle{
+  background-color: rgb(221, 84, 21);
+}
+.new_song_wrap li:nth-child(3) .rank_circle{
+  background-color: rgb(221, 144, 43);
+}
+.song_name_wrap{
+  flex: 1;
+}
+.song_name{
+  flex: 8;
+  font-size: 140%;
+}
+.song_album{
+  color: #555;
+  flex: 8;
+  font-size: 120%;
+  margin-top: .3rem;
+}
+.song_item_wrap a{
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  background: 50% 50% url(../img/notlove.png) no-repeat;
+  background-size: 60%;
 }

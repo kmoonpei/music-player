@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../../utils/API';
+import SongList from '../../../common/SongList';
 
 export default class extends Component {
     constructor(props) {
@@ -26,18 +27,8 @@ export default class extends Component {
     render() {
         let { new_songs } = this.state
         return (
-            <ul className="new_song_wrap">
-                {new_songs.map((item, i) => {
-                    return (
-                        <li key={i}>
-                            <div>
-                                <span>{item.filename}</span>
-                                <a />
-                            </div>
-                        </li>
-                    )
-                })}
-            </ul>
+            <SongList
+                list={new_songs} />
         )
     }
 }
