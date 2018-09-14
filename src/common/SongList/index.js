@@ -6,8 +6,8 @@ export default class extends Component {
         this.state = {
 
         }
-        this.is_rank = this.props.is_rank ? this.props.is_rank : false;
-        this.is_remark = this.props.is_remark ? this.props.is_remark : false;
+        this.is_rank = this.props.is_rank ? this.props.is_rank : false;//是否有序号
+        this.is_remark = this.props.is_remark ? this.props.is_remark : false;//是否有歌曲专辑信息
     }
 
     render() {
@@ -16,13 +16,13 @@ export default class extends Component {
                 {this.props.list.map((item, i) => {
                     return (
                         <li key={i}>
-                            <div className="song_item_wrap">
+                            <div className="song_item_wrap" onPress={() => { }}>
                                 {this.is_rank ? <span className="rank_circle">{i + 1}</span> : null}
                                 <div className="song_name_wrap">
                                     <p className="song_name">{item.filename}</p>
                                     {this.is_remark ? <p className="song_album">{item.remark}</p> : null}
                                 </div>
-                                <a />
+                                <a onPress={() => { }} />
                             </div>
                         </li>
                     )

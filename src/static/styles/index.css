@@ -109,3 +109,25 @@ color: #e9203d;
   background: 50% 50% url(../img/notlove.png) no-repeat;
   background-size: 60%;
 }
+
+
+/* 全部加入播放列表 */
+.all_in_wrap {
+  border-bottom: .1rem solid var(--themC);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+.all_in_wrap p{
+  color: var(--themC);
+  flex: 1;
+}
+.all_in_wrap a{
+  background: 50% 50% url(../img/all_in.png) no-repeat;
+  background-size: 80%;
+  width: 2rem;
+  height: 2rem;
+  /* position: absolute; */
+  right: 0;
+  top: 0;
+}

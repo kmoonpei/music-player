@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import API from '../../../utils/API';
 import { Link } from 'react-router-dom';
+import HeadBar from '../../../common/HeadBar';
 
-export default class extends Component {
+
+export class AlbumList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +21,7 @@ export default class extends Component {
         try {
             let result = await fetch(`/kugou${API.recommend}`);
             let data = await result.json();
-            let showArr = data.plist.list.info.slice(0, 12);
+            let showArr = data.plist.list.info;
             this.setState({ recommends: showArr });
         } catch (err) {
             console.log('Error', err);
@@ -31,13 +33,7 @@ export default class extends Component {
         console.log(recommends)
         return (
             <div>
-                <div className="more_wrap">
-                    <span className="more_txt">更多推荐</span>
-                    <Link to={`/album`}>
-                        <a className="arrow_right" />
-                    </Link>
-                </div>
-                <hr />
+                <HeadBar title={'精选歌单'} />
                 <ul className="reconmmed_ul">
                     {recommends.map((item, i) => {
                         return this.renderItem(item, i)

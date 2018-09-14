@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../../utils/API';
+import { Link } from 'react-router-dom';
 
 export default class extends Component {
     constructor(props) {
@@ -29,11 +30,11 @@ export default class extends Component {
                 {rank_data.map((item) => {
                     return (
                         <li key={item.id}>
-                            <a>
+                            <Link to={`/rank/${item.rankid}`}>
                                 <img className="rank_cover" src={item.imgurl.replace(/\{size\}/g, 400)} />
                                 <span>{item.rankname}</span>
                                 <img className="rank_right_arrow" src={require('../../../static/img/arrow.png')} />
-                            </a>
+                            </Link>
                         </li>
                     )
                 })}

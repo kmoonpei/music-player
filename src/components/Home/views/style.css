@@ -19,6 +19,8 @@
     height: 2.6rem;
     background: 50% 50% url(../../../static/img/arrow.png) no-repeat;
     background-size: 90%;
+    right: 1rem;
+    position: absolute;
 }
 .reconmmed_ul {
     list-style: none;
@@ -64,4 +66,37 @@
     color: #fff;
     font-size: 100%;
     margin-left: .2rem;
+}
+
+.album_info_wrap {
+    
+}
+.cover_bg {
+    height: 10rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    filter: blur(60px);
+    width: 100%;
+    -webkit-filter: blur(60px);
+    position: absolute;
+    top: 38px;
+    z-index: -1;
+}
+.album_info_wrap_top {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+.album_info_wrap_top img {
+    width: 11rem;
+    height: 11rem;
+}
+.album_info_txt_wrap {
+    padding-left: 1rem;
+}
+.album_info_txt_wrap p{
+    color: #444;
+    font-size: 140%;
+    margin-top: .5rem;
 }

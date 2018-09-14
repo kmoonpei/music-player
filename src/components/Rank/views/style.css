@@ -23,3 +23,21 @@
     width: 1.5rem;
     height: 1.5rem;
 }
+.rank_info_wrap_top {
+    position: relative;
+    height: 20rem;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.rank_info_wrap_top p{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: right;
+    color: #fff;
+    font-size: 160%;
+}

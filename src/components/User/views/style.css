@@ -1,0 +1,42 @@
+.logo_wrap {
+    display: flex;
+    height: 20rem;
+    align-items: center;
+    justify-content: center;
+}
+.logo_icon {
+    width: 40%;
+}
+.input_wrap {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    height: 4.5rem;
+    border: .1rem solid #aaa;
+    margin: 2rem auto;
+    border-radius: 3rem;
+    padding: 1rem;
+}
+.input_icon {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+}
+.input_icon .input {
+
+}
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 4rem;
+    border: .1rem solid #aaa;
+    margin: 2rem auto;
+    border-radius: 3rem;
+    padding: 1rem;
+    color: #fff;
+    background-color: var(--themC);
+    font-size: 150%;
+    font-weight: 600;
+}
