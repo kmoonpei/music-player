@@ -9,7 +9,8 @@ import { Nav } from '../common/Nav';
 import { Album } from '../components/Home/views/Album';
 import { AlbumList } from '../components/Home/views/AlbumList';
 import { RankList } from '../components/Rank/views/RankList';
-import { User } from '../components/User/views';
+import User from '../components/User/views';
+import { ArtistsList } from '../components/Artists/views/ArtistsList';
 
 const Routes = () => (
     <Router >
@@ -19,11 +20,11 @@ const Routes = () => (
                 <Route path="/new" component={New} />
                 <Route path="/rank" exact component={Rank} />
                 <Route path="/rank/:id" component={RankList} />
-                <Route path="/artists" component={Artists} />
+                <Route path="/artists" exact component={Artists} />
+                <Route path='/artists/list:id' component={ArtistsList} />
                 <Route path="/album" exact component={AlbumList} />
                 <Route path="/album/:id" component={Album} />
                 <Route path="/user" component={User} />
-
             </Switch>
         </div>
     </Router >

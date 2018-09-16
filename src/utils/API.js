@@ -5,5 +5,6 @@ const API = {
     artist_class: '/singer/class&json=true',//歌手类型
     song_playlist: '/plist/list/',//歌单列表
     rank_list: '/rank/info/',//排行榜歌单列表
+    singer_list: '/singer/list/',//歌手列表
 };
 export default API;

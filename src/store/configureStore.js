@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { reducer as rankReducer } from '../components/Rank';
+import { reducer as loginReducer } from '../components/User';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducers = combineReducers({
-    rankReducer,
+    loginReducer,
 });
 
 const store = (initialState) => {

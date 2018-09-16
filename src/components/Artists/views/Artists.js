@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import API from '../../../utils/API';
+import { Link } from 'react-router-dom';
 
 export default class extends Component {
     constructor(props) {
@@ -25,13 +26,13 @@ export default class extends Component {
         let { artist_class_data } = this.state
         return (
             <ul className="artist_class_wrap">
-                {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, i) => {
+                {artist_class_data.map((item, i) => {
                     return (
                         <li className="class_li">
-                            <a>
-                                <span>热门歌手</span>
+                            <Link to={`/artists/list${item.classid}`}>
+                                <span>{item.classname}</span>
                                 <img src={require('../../../static/img/arrow.png')} />
-                            </a>
+                            </Link>
                         </li>
                     )
                 })}

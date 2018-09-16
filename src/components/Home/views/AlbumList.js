@@ -30,7 +30,6 @@ export class AlbumList extends Component {
 
     render() {
         let { recommends } = this.state
-        console.log(recommends)
         return (
             <div>
                 <HeadBar title={'精选歌单'} />

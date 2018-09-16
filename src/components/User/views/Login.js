@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HeadBar from '../../../common/HeadBar';
 import './style.css';
+import { action as LoginAction } from '../index';
 
 export class Login extends Component {
     constructor(props) {
@@ -8,6 +9,10 @@ export class Login extends Component {
         this.state = {
 
         }
+        this.login = this.login.bind(this);
+    }
+    login() {
+        this.props.dispatch(LoginAction('LOGIN', 'logIn'));
     }
     render() {
         return (
@@ -24,8 +29,9 @@ export class Login extends Component {
                     <img className="input_icon" src={require('../../../static/img/pwd.png')} />
                     <input type="text" className="input" placeholder="请输入密码" />
                 </div>
-                <div className="login">登录</div>
+                <div className="login" onPress={this.login}>登录</div>
             </div>
         )
     }
 }
+

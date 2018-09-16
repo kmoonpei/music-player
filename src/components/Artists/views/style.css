@@ -23,3 +23,29 @@
     width: 1.2rem;
     height: 1.2rem;
 }
+
+.singers_wrap {
+
+}
+.singer_item_wrap {
+
+}
+.singer_item_wrap a{
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    flex-direction: row;
+    border: .005rem solid #d8cfcf;
+}
+.singer_item_wrap span{
+    padding-left: 1rem;
+}
+.singer_img {
+    width: 5rem;
+}
+.right_arrow_icon {
+    position: absolute;
+    right: 1rem;
+    width: 1rem;
+    height: 1rem;
+}

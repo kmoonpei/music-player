@@ -28,7 +28,6 @@ export default class extends Component {
 
     render() {
         let { recommends } = this.state
-        console.log(recommends)
         return (
             <div>
                 <div className="more_wrap">

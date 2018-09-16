@@ -24,7 +24,6 @@ export default class extends Component {
     }
     render() {
         let { rank_data } = this.state
-        console.log('rank', rank_data)
         return (
             <ul className="rank_wrap">
                 {rank_data.map((item) => {
