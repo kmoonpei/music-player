@@ -1,5 +1,6 @@
 import * as types from '../../actionTypes';
-export default function AlbumsList(state = {}, action) {
+const initState = { list: [] }
+export default function AlbumsList(state = initState, action) {
     switch (action.type) {
         case types.ALBUMS:
             return Object.assign({}, state, action.data);

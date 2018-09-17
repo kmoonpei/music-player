@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import API from '../../../utils/API';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { action as ArtistsAction } from '../index';
 
-export default class extends Component {
+class Artists extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,12 +17,19 @@ export default class extends Component {
     }
 
     async getData() {
-        try {
-            let result = await fetch(`/kugou${API.artist_class}`);
-            let data = await result.json();
-            this.setState({ artist_class_data: data.list });
-        } catch (err) {
-            console.log('Error', err);
+        let { list } = this.props.Artists
+        if (list.length == 0) {
+            try {
+                let result = await fetch(`/kugou${API.artist_class}`);
+                let data = await result.json();
+                let arr = data.list;
+                this.setState({ artist_class_data: arr });
+                this.props.ArtistsActions.ArtistsAction({ list: arr })
+            } catch (err) {
+                console.log('Error', err);
+            }
+        } else {
+            this.setState({ artist_class_data: list });
         }
     }
     render() {
@@ -40,3 +50,11 @@ export default class extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => (state);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        ArtistsActions: bindActionCreators(ArtistsAction, dispatch),
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Artists);

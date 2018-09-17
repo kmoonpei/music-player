@@ -4,11 +4,8 @@ import HeadBar from '../../../common/HeadBar';
 import SongList from '../../../common/SongList';
 import AllAddToPlayList from '../../../common/AllAddToPlayList';
 import './style.css';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as AlbumsAction from '../actions';
 
-class Album extends Component {
+export class Album extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -64,10 +61,3 @@ class Album extends Component {
     }
 }
 
-const mapStateToProps = (state) => (state);
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // getAlbumsActions: bindActionCreators(AlbumsAction, dispatch),
-    }
-};
-export default connect(mapStateToProps,mapDispatchToProps)(Album);

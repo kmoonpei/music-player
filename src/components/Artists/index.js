@@ -1,2 +1,4 @@
 import view from './views';
-export { view };
+import * as action from './action.js';
+import Artists from './reducer';
+export { view, action, Artists };

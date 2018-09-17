@@ -1,5 +1,5 @@
 import view from './views';
-import * as actions from './actions.js';
-import * as reducer from './reducer.js';
+import * as action from './actions.js';
+import Ranks from './reducer.js';
 
-export { view, actions, reducer };
+export { view, action, Ranks };

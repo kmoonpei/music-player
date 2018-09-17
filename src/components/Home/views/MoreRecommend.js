@@ -3,7 +3,7 @@ import API from '../../../utils/API';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as AlbumsAction from '../actions';
+import { action as AlbumsAction } from '../index';
 
 class MoreRecommends extends Component {
     constructor(props) {
@@ -19,17 +19,23 @@ class MoreRecommends extends Component {
     }
 
     async getData() {
-        try {
-            let result = await fetch(`/kugou${API.recommend}`);//获取推荐专辑
-            let data = await result.json();
-            let arr = data.plist.list.info;
-            let showArr = arr.slice(0, 12);
-            this.setState({ recommends: showArr });
-            this.props.getAlbumsActions.AlbumsAction({ list: arr })
+        let { list } = this.props.AlbumsList;
+        if (list.length == 0) {
+            try {
+                let result = await fetch(`/kugou${API.recommend}`);//获取推荐专辑
+                let data = await result.json();
+                let arr = data.plist.list.info;
+                let showArr = arr.slice(0, 12);
+                this.setState({ recommends: showArr });
+                this.props.getAlbumsActions.AlbumsAction({ list: arr })
 
-        } catch (err) {
-            console.log('Error', err);
+            } catch (err) {
+                console.log('Error', err);
+            }
+        } else {
+            this.setState({ recommends: list });
         }
+
     }
 
     render() {

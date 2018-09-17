@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import API from '../../../utils/API';
 import { Link } from 'react-router-dom';
 import HeadBar from '../../../common/HeadBar';
+import { connect } from 'react-redux';
 
 
-export class AlbumList extends Component {
+class AlbumList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,14 +19,7 @@ export class AlbumList extends Component {
     }
 
     async getData() {
-        try {
-            let result = await fetch(`/kugou${API.recommend}`);
-            let data = await result.json();
-            let showArr = data.plist.list.info;
-            this.setState({ recommends: showArr });
-        } catch (err) {
-            console.log('Error', err);
-        }
+        this.setState({ recommends: this.props.AlbumsList.list })
     }
 
     render() {
@@ -58,3 +52,7 @@ export class AlbumList extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => (state);
+
+export default connect(mapStateToProps)(AlbumList);

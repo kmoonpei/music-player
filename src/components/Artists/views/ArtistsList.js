@@ -8,6 +8,7 @@ export class ArtistsList extends Component {
         super(props);
         this.state = {
             singer_data: [],
+            classname:'',
         }
     }
     componentWillMount() {
@@ -18,16 +19,18 @@ export class ArtistsList extends Component {
         try {
             let result = await fetch(`/kugou${API.singer_list}${this.props.match.params.id}?json=true`);
             let data = await result.json();
-            this.setState({ singer_data: data.singers.list.info });
+            this.setState({ 
+                singer_data: data.singers.list.info,
+                classname:data.classname });
         } catch (err) {
             console.log('Error', err);
         }
     }
     render() {
-        let { singer_data } = this.state
+        let { singer_data,classname } = this.state
         return (
             <div>
-                <HeadBar title={'热门歌手'} />
+                <HeadBar title={classname} />
                 <ul className="singers_wrap">
                     {singer_data.map((item, i) => {
                         return (

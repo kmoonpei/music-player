@@ -1,11 +1,10 @@
 import * as types from '../../actionTypes';
 const initState = { list: [] }
-export default function Ranks(state = initState, action) {
+export default function Artists(state = initState, action) {
     switch (action.type) {
-        case types.RANKLIST:
+        case types.ARTISTS_LIST:
             return Object.assign({}, state, action.data);
         default:
             return state;
     }
 };
-

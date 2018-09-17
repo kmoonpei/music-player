@@ -1,8 +1,8 @@
-import * as types from './actionTypes';
-const saveRankList = (data) => {
+import * as types from '../../actionTypes';
+const RanksAction = (data) => {
     return {
-        type: types.SAVE_RANKLIST,
-        data
+        type: types.RANKLIST,
+        data: data
     }
 };
-export { saveRankList };
+export { RanksAction };
