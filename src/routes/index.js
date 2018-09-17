@@ -6,7 +6,7 @@ import { view as New } from '../components/New';
 import { view as Artists } from '../components/Artists';
 import { SearchBar } from '../components/Search.bar';
 import { Nav } from '../common/Nav';
-import { Album } from '../components/Home/views/Album';
+import Album from '../components/Home/views/Album';
 import { AlbumList } from '../components/Home/views/AlbumList';
 import { RankList } from '../components/Rank/views/RankList';
 import { view as User } from '../components/User';

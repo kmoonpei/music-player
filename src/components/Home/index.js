@@ -1,5 +1,5 @@
 import view from './views';
-// import * as actions from './actions.js';
-// import reducer from './reducer.js';
+import * as action from './actions.js';
+import AlbumsList from './reducer.js';
 
-export { view };
+export { view, action, AlbumsList };

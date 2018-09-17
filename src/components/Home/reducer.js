@@ -1,7 +1,7 @@
-import * as types from './actionTypes';
-export default  (state = {}, action) => {
+import * as types from '../../actionTypes';
+export default function AlbumsList(state = {}, action) {
     switch (action.type) {
-        case types.SAVE_RANKLIST:
+        case types.ALBUMS:
             return Object.assign({}, state, action.data);
         default:
             return state;

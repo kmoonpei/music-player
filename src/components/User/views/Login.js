@@ -12,6 +12,7 @@ class Login extends Component {
         this.state = {
             name: '',
             pwd: '',
+            show_toast: false,
         }
         this.login = this.login.bind(this);
         this.setName = this.setName.bind(this);
@@ -20,7 +21,11 @@ class Login extends Component {
     }
     login() {
         let { name, pwd } = this.state;
-        this.props.loginActions.LoginAction({ status: 'logIn', name: name, pwd: pwd });
+        if (name || pwd) {
+            this.props.loginActions.LoginAction({ status: 'logIn', name: name, pwd: pwd });
+        } else {
+            this.setState({ show_toast: true });
+        }
     }
     setName(e) {
         let value = e.target.value;
@@ -31,6 +36,7 @@ class Login extends Component {
         this.setState({ pwd: value });
     }
     render() {
+        let { show_toast } = this.state
         return (
             <div>
                 <HeadBar title={'登录'} />
@@ -46,6 +52,7 @@ class Login extends Component {
                     <input type="text" className="input" placeholder="请输入密码" onChange={this.setPwd} />
                 </div>
                 <div className="login" onClick={this.login}>登录</div>
+                {show_toast ? <div className="toast" onClick={this.login}>要输入用户名或密码才能登录哦 ☺</div> : null}
             </div>
         )
     }

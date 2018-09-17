@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import API from '../../../utils/API';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as AlbumsAction from '../actions';
 
-export default class extends Component {
+class MoreRecommends extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,10 +20,13 @@ export default class extends Component {
 
     async getData() {
         try {
-            let result = await fetch(`/kugou${API.recommend}`);
+            let result = await fetch(`/kugou${API.recommend}`);//获取推荐专辑
             let data = await result.json();
-            let showArr = data.plist.list.info.slice(0, 12);
+            let arr = data.plist.list.info;
+            let showArr = arr.slice(0, 12);
             this.setState({ recommends: showArr });
+            this.props.getAlbumsActions.AlbumsAction({ list: arr })
+
         } catch (err) {
             console.log('Error', err);
         }
@@ -62,3 +68,11 @@ export default class extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => (state);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getAlbumsActions: bindActionCreators(AlbumsAction, dispatch),
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MoreRecommends);
