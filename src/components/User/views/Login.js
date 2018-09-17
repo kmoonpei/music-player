@@ -2,17 +2,33 @@ import React, { Component } from 'react';
 import HeadBar from '../../../common/HeadBar';
 import './style.css';
 import { action as LoginAction } from '../index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export class Login extends Component {
+
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            name: '',
+            pwd: '',
         }
         this.login = this.login.bind(this);
+        this.setName = this.setName.bind(this);
+        this.setPwd = this.setPwd.bind(this);
+
     }
     login() {
-        this.props.dispatch(LoginAction('LOGIN', 'logIn'));
+        let { name, pwd } = this.state;
+        this.props.loginActions.LoginAction({ status: 'logIn', name: name, pwd: pwd });
+    }
+    setName(e) {
+        let value = e.target.value;
+        this.setState({ name: value });
+    }
+    setPwd(e) {
+        let value = e.target.value;
+        this.setState({ pwd: value });
     }
     render() {
         return (
@@ -23,15 +39,23 @@ export class Login extends Component {
                 </div>
                 <div className="input_wrap">
                     <img className="input_icon" src={require('../../../static/img/me.png')} />
-                    <input type="text" className="input" placeholder="请输入用户名" />
+                    <input type="text" className="input" placeholder="请输入用户名" onChange={this.setName} />
                 </div>
                 <div className="input_wrap">
                     <img className="input_icon" src={require('../../../static/img/pwd.png')} />
-                    <input type="text" className="input" placeholder="请输入密码" />
+                    <input type="text" className="input" placeholder="请输入密码" onChange={this.setPwd} />
                 </div>
-                <div className="login" onPress={this.login}>登录</div>
+                <div className="login" onClick={this.login}>登录</div>
             </div>
         )
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginActions: bindActionCreators(LoginAction, dispatch),
+    }
+};
+const mapStateToProps = (state) => (state);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

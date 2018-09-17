@@ -9,7 +9,7 @@ import { Nav } from '../common/Nav';
 import { Album } from '../components/Home/views/Album';
 import { AlbumList } from '../components/Home/views/AlbumList';
 import { RankList } from '../components/Rank/views/RankList';
-import User from '../components/User/views';
+import { view as User } from '../components/User';
 import { ArtistsList } from '../components/Artists/views/ArtistsList';
 
 const Routes = () => (

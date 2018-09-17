@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import HeadBar from '../../../common/HeadBar';
 import './style.css';
+import { connect } from 'react-redux';
 
-export class Me extends Component {
+class Me extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +16,7 @@ export class Me extends Component {
                 <HeadBar title={'个人中心'} />
                 <div className="avatar_wrap">
                     <img className="logo_icon" src={require("../../../static/img/rechal.jpg")} />
-                    <p>{`当前用户：`}</p>
+                    <p>{`当前用户：${this.props.loginState.name}`}</p>
                 </div>
                 <div className="item_wrap">
                     <span>我的收藏列表</span>
@@ -28,3 +29,7 @@ export class Me extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => { return state };
+
+export default connect(mapStateToProps)(Me);

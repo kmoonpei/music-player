@@ -1,5 +1,5 @@
 import view from './views';
-import * as action  from './action';
-import * as reducer from './reducer';
+import * as action from './action';
+import loginState from './reducer';
 
-export { view, action, reducer };
+export { view, action, loginState };

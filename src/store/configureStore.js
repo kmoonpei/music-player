@@ -1,13 +1,12 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { reducer as loginReducer } from '../components/User';
+import { loginState } from '../components/User';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducers = combineReducers({
-    loginReducer,
+    loginState,
 });
-
-const store = (initialState) => {
+const configuretore = (initialState) => {
     return createStore(
         reducers,
         initialState,
@@ -15,4 +14,4 @@ const store = (initialState) => {
     );
 };
 
-export default { store }
+export default configuretore;

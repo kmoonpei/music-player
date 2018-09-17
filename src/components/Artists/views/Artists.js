@@ -28,7 +28,7 @@ export default class extends Component {
             <ul className="artist_class_wrap">
                 {artist_class_data.map((item, i) => {
                     return (
-                        <li className="class_li">
+                        <li key={i} className="class_li">
                             <Link to={`/artists/list${item.classid}`}>
                                 <span>{item.classname}</span>
                                 <img src={require('../../../static/img/arrow.png')} />

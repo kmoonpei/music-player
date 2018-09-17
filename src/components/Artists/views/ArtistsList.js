@@ -31,7 +31,7 @@ export class ArtistsList extends Component {
                 <ul className="singers_wrap">
                     {singer_data.map((item, i) => {
                         return (
-                            <li className="singer_item_wrap">
+                            <li key={i} className="singer_item_wrap">
                                 {/* <Link to={`/artists/list${item.classid}`}> */}
                                 <a>
                                     <img className="singer_img" src={`${item.imgurl.replace(/\{size\}/g, 400)}`} />

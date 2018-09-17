@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
-import { Login } from './Login';
-import { Me } from './Me';
+import Login from './Login';
+import Me from './Me';
 import { connect } from 'react-redux';
+
 
 
 class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            logined: false,//是否登录
+
         }
     }
-    componentWillReceiveProps(props){
-        alert(`登录状态：${props.login_status}`)
-        
+    componentWillReceiveProps(nextProps) {
+
     }
 
     render() {
-        // alert(`登录状态：${this.props.login_status}`)
-        let { logined } = this.state
-        return this.props.login_status == "logIn" ? <Me /> : <Login />
+        console.log(this.props.loginState)
+        return this.props.loginState.status == 'logIn' ? <Me /> : <Login />
     }
 }
 
-const mapStateTopProps = (state) => ({
-    login_status: state.loginState.status,
-})
+const mapStateToProps = (state) => { return state };
 
-export default connect(mapStateTopProps)(User);
+export default connect(mapStateToProps)(User);

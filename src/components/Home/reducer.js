@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-export  (state = {}, action) => {
+export default  (state = {}, action) => {
     switch (action.type) {
         case types.SAVE_RANKLIST:
             return Object.assign({}, state, action.data);
