@@ -49,3 +49,19 @@
     width: 1rem;
     height: 1rem;
 }
+
+/* 歌手歌曲列表 */
+.singersongs_cover_wrap {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.singersongs_play {
+   
+}

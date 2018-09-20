@@ -11,6 +11,7 @@ import AlbumList from '../components/Home/views/AlbumList';
 import { RankList } from '../components/Rank/views/RankList';
 import { view as User } from '../components/User';
 import { ArtistsList } from '../components/Artists/views/ArtistsList';
+import { SingerSongs } from '../components/Artists/views/SingerSongs';
 
 const Routes = () => (
     <Router >
@@ -21,7 +22,8 @@ const Routes = () => (
                 <Route path="/rank" exact component={Rank} />
                 <Route path="/rank/:id" component={RankList} />
                 <Route path="/artists" exact component={Artists} />
-                <Route path='/artists/list:id' component={ArtistsList} />
+                <Route path='/artists/list/:id' exact component={ArtistsList} />
+                <Route path='/artists/list/singersongs/:id' component={SingerSongs} />
                 <Route path="/album" exact component={AlbumList} />
                 <Route path="/album/:id" component={Album} />
                 <Route path="/user" component={User} />

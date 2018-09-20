@@ -8,7 +8,7 @@ export class ArtistsList extends Component {
         super(props);
         this.state = {
             singer_data: [],
-            classname:'',
+            classname: '',
         }
     }
     componentWillMount() {
@@ -19,29 +19,29 @@ export class ArtistsList extends Component {
         try {
             let result = await fetch(`/kugou${API.singer_list}${this.props.match.params.id}?json=true`);
             let data = await result.json();
-            this.setState({ 
+            this.setState({
                 singer_data: data.singers.list.info,
-                classname:data.classname });
+                classname: data.classname
+            });
         } catch (err) {
             console.log('Error', err);
         }
     }
     render() {
-        let { singer_data,classname } = this.state
+        let { singer_data, classname } = this.state
         return (
             <div>
                 <HeadBar title={classname} />
                 <ul className="singers_wrap">
                     {singer_data.map((item, i) => {
+                        let img_url = item.imgurl.replace(/\{size\}/g, 400)
                         return (
                             <li key={i} className="singer_item_wrap">
-                                {/* <Link to={`/artists/list${item.classid}`}> */}
-                                <a>
-                                    <img className="singer_img" src={`${item.imgurl.replace(/\{size\}/g, 400)}`} />
+                                <Link to={{ pathname: `/artists/list/singersongs/${item.singerid}`, state: { singerimg: img_url, singername: item.singername } }}>
+                                    <img className="singer_img" src={img_url} />
                                     <span>{item.singername}</span>
                                     <img className="right_arrow_icon" src={require('../../../static/img/arrow.png')} />
-                                </a>
-                                {/* </Link> */}
+                                </Link>
                             </li>
                         )
                     })}

@@ -39,7 +39,7 @@ class Artists extends Component {
                 {artist_class_data.map((item, i) => {
                     return (
                         <li key={i} className="class_li">
-                            <Link to={`/artists/list${item.classid}`}>
+                            <Link to={`/artists/list/${item.classid}`}>
                                 <span>{item.classname}</span>
                                 <img src={require('../../../static/img/arrow.png')} />
                             </Link>
