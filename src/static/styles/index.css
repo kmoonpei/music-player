@@ -24,18 +24,18 @@ a {
 .nav li {
   height: 3.4rem;
   line-height: 3.4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .nav li.active {
-  box-shadow: inset 0px -2px 0px #e9203d;
+  border-bottom: .2rem solid var(--themC);
 }
 .nav li a {
   color: #333;
   font-size: 1.52rem;
   text-decoration: none;
 }
-.nav li a.active {
-color: #e9203d;
-}
+
 
 /* 二级页面标题栏 */
 .headbar_wrap {
