@@ -12,7 +12,7 @@ import { RankList } from '../components/Rank/views/RankList';
 import { view as User } from '../components/User';
 import { ArtistsList } from '../components/Artists/views/ArtistsList';
 import { SingerSongs } from '../components/Artists/views/SingerSongs';
-import { Search } from '../components/Search/views';
+import Search from '../components/Search/views/index';
 import { SearchTag } from '../components/Search/views/searchtag';
 import { Play } from '../components/Play/views';
 

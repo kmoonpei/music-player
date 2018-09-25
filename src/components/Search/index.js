@@ -1,2 +1,4 @@
 import view from './views';
-export { view };
+import * as action from './action';
+import HotSearch from './reducer';
+export { view, action, HotSearch };

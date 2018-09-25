@@ -3,8 +3,12 @@ import SearchBar from '../../Search.bar';
 import './style.css';
 import API from '../../../utils/API';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { action as HotSearchAction } from '../index';
 
-export class Search extends Component {
+
+class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,12 +20,18 @@ export class Search extends Component {
         this.getHotSearch()
     }
     async getHotSearch() {
-        try {
-            let result = await fetch(`/mobilecdn${API.searchHot}?format=json`);
-            let data = await result.json();
-            this.setState({ hot_search: data.data.info });
-        } catch (err) {
-            console.log("Error", err);
+        let { list } = this.props.HotSearch
+        if (list.length == 0) {
+            try {
+                let result = await fetch(`/mobilecdn${API.searchHot}?format=json`);
+                let data = await result.json();
+                this.setState({ hot_search: data.data.info });
+                this.props.HotSearchActions.HotSearchAction({ list: data.data.info });
+            } catch (err) {
+                console.log("Error", err);
+            }
+        } else {
+            this.setState({ hot_search: list })
         }
     }
     render() {
@@ -51,3 +61,11 @@ export class Search extends Component {
     }
 
 }
+
+const mapStateToProps = (state) => { return state };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        HotSearchActions: bindActionCreators(HotSearchAction, dispatch),
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Search)
