@@ -19,7 +19,7 @@ export default class SearchBar extends Component {
                     <Link to={`/user`}>
                         <a className="icon_user" />
                     </Link>}
-                <Link to={`/Search`} className="search_wrap">
+                <Link to={`/search`} className="search_wrap">
                     <a className="search_icon" />
                     <input type="text" className="input" placeholder="请输入关键字" />
                 </Link>

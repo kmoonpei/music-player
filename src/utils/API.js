@@ -6,5 +6,9 @@ const API = {
     song_playlist: '/plist/list/',//歌单列表
     rank_list: '/rank/info/',//排行榜歌单列表
     singer_list: '/singer/list/',//歌手列表
+    searchHot: '/api/v3/search/hot',//热门搜索
+    searchResult: '/api/v3/search/song',//热门搜索结果
+    song_detail: '/app/i/getSongInfo.php',// 播放歌曲信息
+    song_lyrics:'/app/i/krc.php',//歌词
 };
 export default API;

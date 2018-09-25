@@ -13,6 +13,8 @@ import { view as User } from '../components/User';
 import { ArtistsList } from '../components/Artists/views/ArtistsList';
 import { SingerSongs } from '../components/Artists/views/SingerSongs';
 import { Search } from '../components/Search/views';
+import { SearchTag } from '../components/Search/views/searchtag';
+import { Play } from '../components/Play/views';
 
 const Routes = () => (
     <Router >
@@ -28,7 +30,11 @@ const Routes = () => (
                 <Route path="/album" exact component={AlbumList} />
                 <Route path="/album/:id" component={Album} />
                 <Route path="/user" component={User} />
-                <Route path="/Search" component={Search} />
+                <Route path="/search" exact component={Search} />
+                <Route path="/search/result" component={SearchTag} />
+                <Route path="/play" component={Play} />
+
+
             </Switch>
         </div>
     </Router >

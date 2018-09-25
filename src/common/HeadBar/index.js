@@ -9,8 +9,9 @@ export default class extends Component {
     render() {
         return (
             <div className="headbar_wrap">
-                <img src={require('../../static/img/left_arrow.png')} onClick={this.goBack} />
+                <img className="back_btn" src={require('../../static/img/left_arrow.png')} onClick={this.goBack} />
                 <span>{this.props.title}</span>
+                {this.props.all_in_btn?<img className="search_all_in" src={require('../../static/img/all_in_0.png')}/>:null}
             </div>
         )
     }

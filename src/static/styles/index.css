@@ -46,7 +46,7 @@ a {
   justify-content: center;
   background-color: var(--themC);
 }
-.headbar_wrap img{
+.back_btn {
   position: absolute;
   width: 1,5rem;
   height: 1.5rem;
@@ -55,6 +55,12 @@ a {
 .headbar_wrap span{
   font-size: 140%;
   color: #fff;
+}
+.search_all_in {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  right: 2rem;
 }
 
 /* 歌曲列表 */
@@ -102,7 +108,7 @@ a {
   font-size: 120%;
   margin-top: .3rem;
 }
-.song_item_wrap a{
+.like{
   display: block;
   width: 3rem;
   height: 3rem;
@@ -131,3 +137,4 @@ a {
   right: 0;
   top: 0;
 }
+

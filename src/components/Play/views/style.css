@@ -1,0 +1,16 @@
+.play_container {
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+.container_bg {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    filter: blur(80px);
+    -webkit-filter: blur(80px);
+    z-index: -1;
+}
