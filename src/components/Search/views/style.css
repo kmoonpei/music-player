@@ -1,6 +1,7 @@
 .tit_txt {
-    border-bottom: .1rem solid #aaa;
+    border-bottom: .1rem solid #c5c2c2;
     margin-left: 1rem;
+    margin-right: 1rem;
     padding: .9rem;
     padding-left: 0;
     color: #555;
@@ -37,11 +38,11 @@
     width: 100%;
     display: -ms-flexbox;
     display: flex;
-    padding-top: .6rem;
-    padding-bottom: .6rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     color: #555;
-    font-size: 1.5rem;
-    border-bottom: .1rem solid #aaa;
+    font-size: 1.4rem;
+    border-bottom: .1rem solid #c5c2c2;
 }
 .his_txt {
     flex: 1;
@@ -50,8 +51,8 @@
     color: #f00;
 }
 .delete {
-    width:2rem;
-    height:2rem;
+    width:1.5rem;
+    height:1.5rem;
     background: 50% 50% url(../../../static/img/delete.png) no-repeat;
     background-size: 70%;
 }

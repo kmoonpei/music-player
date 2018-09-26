@@ -3,3 +3,4 @@ export const ALBUMS = "ALBUMS";
 export const RANKLIST = "RANKLIST";
 export const ARTISTS_LIST = "ARTISTS_LIST";
 export const HOTWORD = "HOTWORD";
+export const SEARCHWORD = "SEARCHWORD";
