@@ -33,7 +33,8 @@ class MoreRecommends extends Component {
                 console.log('Error', err);
             }
         } else {
-            this.setState({ recommends: list });
+            let showArr = list.slice(0, 12);
+            this.setState({ recommends: showArr });
         }
 
     }
