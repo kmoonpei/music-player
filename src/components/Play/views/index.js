@@ -3,6 +3,9 @@ import './style.css';
 import API from '../../../utils/API';
 import HeadBar from '../../../common/HeadBar';
 import { Swiper, Slide } from 'react-dynamic-swiper';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { action as PlayListAction } from '../index';
 
 
 const contral_btn = [
@@ -11,8 +14,7 @@ const contral_btn = [
     { tit: 'next', img: `pre_next.png` },
     { tit: 'list', img: `list.png` }]
 
-
-export class Play extends Component {
+class Play extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,11 +22,16 @@ export class Play extends Component {
             modal_song_list: [],//播放列表
             show_modal_songlist: false,
         }
-    }
-    componentWillMount() {
-        this.getData()
+        this.clearAllPlayList = this.clearAllPlayList.bind(this)
     }
 
+    componentWillMount() {
+        this.getData()
+        this.setState({ modal_song_list: this.props.PlayListState.list })
+        console.log('播放列表：', this.props.PlayListState.list)
+    }
+
+    //获取当前播放歌曲信息和歌词
     async getData() {
         let hash = this.props.location.state.hash
         try {
@@ -39,11 +46,31 @@ export class Play extends Component {
         }
     }
 
+    //清空播放列表
+    clearAllPlayList() {
+        this.setState({ modal_song_list: [] })
+        this.props.PlayListActions.PlayListAction('SavePlayList', { list: [] })
+    }
+
+    //在播放列表中删除某首歌
+    deleteOneSong(i) {
+        let arr = this.props.PlayListState.list
+        arr.splice(i, 1);
+        this.props.PlayListActions.PlayListAction('SavePlayList', { list: arr })
+    }
+
+    handleClick(i) {
+        if (i === 3) {
+            this.openModalSongList(true)
+        }
+    }
+    //打开播放列表
     openModalSongList(tag) {
         this.setState({ show_modal_songlist: tag })
     }
+
     render() {
-        let { song_detail, lyrics } = this.state
+        let { song_detail, lyrics, modal_song_list } = this.state
         let albumImg = `${song_detail.imgUrl}`.replace(/\{size\}/g, 400)
 
         return (
@@ -59,13 +86,13 @@ export class Play extends Component {
                         <div className="modal_song_title">
                             <img onClick={this.openModalSongList.bind(this, false)} className="modal_song_close" src={require('../../../static/img/delete.png')} />
                             <span className="modal_song_tit">播放列表({1})首</span>
-                            <span className="modal_song_delt">清除</span>
+                            <span className="modal_song_delt" onClick={this.clearAllPlayList}>清除</span>
                         </div>
                         <ul className="modal_song_list_wrap">
-                            {[1, 1, 1, 1, 1, 1, 1, 1].map((item, i) => {
+                            {modal_song_list.map((item, i) => {
                                 return <li className="modal_song_item_wrap" key={i}>
-                                    <span className="modal_song_name">The xx -Intro(纯音乐版)家私电机都是老客户蓝色大海   家扫地机</span>
-                                    <img className="modal_song_item_close" src={require('../../../static/img/delete.png')} />
+                                    <span className="modal_song_name">{item.filename}</span>
+                                    <img className="modal_song_item_close" onClick={() => { this.deleteOneSong(i) }} src={require('../../../static/img/delete.png')} />
                                 </li>
                             })}
                         </ul>
@@ -110,7 +137,7 @@ export class Play extends Component {
                                         rotate = 180
                                     }
                                     return <div key={i} className="item_btn_wrap">
-                                        <div key={i} className="item_btn" onClick={this.openModalSongList.bind(this, true)}>
+                                        <div key={i} className="item_btn" onClick={this.handleClick.bind(this, i)}>
                                             <img className="item_img" style={{ transform: `rotateY(${rotate}deg)` }} src={require(`../../../static/img/${item.img}`)} />
                                         </div>
                                     </div>
@@ -123,3 +150,10 @@ export class Play extends Component {
         )
     }
 }
+const mapStateToProps = (state) => (state);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        PlayListActions: bindActionCreators(PlayListAction, dispatch),
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Play); 

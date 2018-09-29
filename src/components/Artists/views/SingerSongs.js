@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import HeadBar from '../../../common/HeadBar';
 import Cheerio from 'cheerio';
 import SongList from '../../../common/SongList';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { action as PlayListAction } from '../../Play';
 
-export class SingerSongs extends Component {
+class SingerSongs extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +16,7 @@ export class SingerSongs extends Component {
             singer_name: '',
             singer_img: '',
         }
+        this.addToList = this.addToList.bind(this)
     }
     componentWillMount() {
         this.getData();
@@ -45,16 +49,33 @@ export class SingerSongs extends Component {
             console.log('Error', err);
         }
     }
+    //全部添加到播放列表并跳转播放页
+    addToList() {
+        let { songs } = this.state
+        let list = songs.map((item) => {
+            return { filename: item.filename, hash: item.hash }
+        });
+        this.props.PlayListActions.PlayListAction('SavePlayList', { list: list })
+        this.props.history.push({ pathname: '/play', state: songs[0] })
+    }
     render() {
         let { songs, singer_name, singer_img } = this.state
         return (
             <div>
                 <HeadBar title={singer_name} />
-                <div className="singersongs_cover_wrap" style={{ backgroundImage: `url(${singer_img})` }}>
-                    <img className="singersongs_play" src={require('../../../static/img/play.png')}/>
+                <div onClick={this.addToList} className="singersongs_cover_wrap" style={{ backgroundImage: `url(${singer_img})` }}>
+                    <img className="singersongs_play" src={require('../../../static/img/play.png')} />
                 </div>
                 <SongList list={songs} />
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => (state);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        PlayListActions: bindActionCreators(PlayListAction, dispatch),
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SingerSongs); 

@@ -50,7 +50,7 @@ export class Album extends Component {
                             <p>{`更新时间：${this.timeFormat(album_info.publishtime)}`}</p>
                         </div>
                     </div>
-                    <AllAddToPlayList />
+                    <AllAddToPlayList list={song_list} />
                 </div>
                 <SongList
                     list={song_list}

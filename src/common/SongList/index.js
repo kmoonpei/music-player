@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PlayListAction from '../../components/Play/action';
 
-export default class extends Component {
+class SongList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,6 +14,12 @@ export default class extends Component {
         this.is_remark = this.props.is_remark ? this.props.is_remark : false;//是否有歌曲专辑信息
     }
 
+    addToPlay(item) {
+        let old_list = this.props.PlayListState.list
+        let new_data = { filename: item.filename, hash: item.hash }
+        old_list.push(new_data)
+        this.props.PlayListActions.PlayListAction('SavePlayList', { list: old_list })
+    }
 
     render() {
         return (
@@ -20,7 +29,7 @@ export default class extends Component {
                         <li key={i}>
                             <div className="song_item_wrap">
                                 {this.is_rank ? <span className="rank_circle">{i + 1}</span> : null}
-                                <Link to={{ pathname: `/play`, state: item }} className="song_name_wrap">
+                                <Link to={{ pathname: '/play', state: item }} onClick={() => { this.addToPlay(item) }} className="song_name_wrap">
                                     <p className="song_name">{item.filename}</p>
                                     {this.is_remark ? <p className="song_album">{item.remark}</p> : null}
                                 </Link>
@@ -33,3 +42,11 @@ export default class extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => (state);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        PlayListActions: bindActionCreators(PlayListAction, dispatch),
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SongList); 

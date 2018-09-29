@@ -46,7 +46,7 @@ export class RankList extends Component {
                 <div className="rank_info_wrap_top" style={{ backgroundImage: `url(${cover_imgurl})` }}>
                     <p>{`更新时间：${this.timeFormat(update_time)}`}</p>
                 </div>
-                <AllAddToPlayList />
+                <AllAddToPlayList list={song_list}/>
                 <SongList
                     list={song_list}
                     is_rank={true}

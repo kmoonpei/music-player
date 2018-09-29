@@ -60,6 +60,7 @@ class Search extends Component {
     search() {
         let edit_word = this.state.edit_word.trim();
         if (edit_word) {
+            console.log('history', this.props.history)
             this.props.history.push({ pathname: '/search/result', state: { searchValue: edit_word } });
             this.saveToHistory(edit_word)
         }
