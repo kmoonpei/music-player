@@ -79,9 +79,20 @@ class Play extends Component {
                 <div className="container_play" >
                     <HeadBar only_back={true} />
                     <img className="more_icon" src={require('../../../static/img/more_info.png')} />
-                    {/* <div className="more_icon">
+                    <div className="more_wrap">
+                        <div className="item_wrap">
+                            {song_detail.songName}
+                        </div>
+                        <div className="item_wrap">
 
-                    </div> */}
+                        </div>
+                        <div className="item_wrap">
+
+                        </div>
+                        <div className="item_wrap">
+                            取消
+                        </div>
+                    </div>
                     {this.state.show_modal_songlist ? <div className="modal_song_wrap">
                         <div className="modal_song_title">
                             <img onClick={this.openModalSongList.bind(this, false)} className="modal_song_close" src={require('../../../static/img/delete.png')} />
@@ -111,7 +122,7 @@ class Play extends Component {
                             >
                                 <Slide className="Demo_swiper_slide" >
                                     <div className="rotate_cover">
-                                        <div className="img_cover_wrap" style={{ background: `url(${albumImg}) no-repeat center` }}>
+                                        <div className="img_cover_wrap" style={{ background: `url(${albumImg}) center / cover` }}>
                                             <div className="img_cover"></div>
                                         </div>
                                     </div>
