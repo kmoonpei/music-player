@@ -79,17 +79,22 @@ class Play extends Component {
                 <div className="container_play" >
                     <HeadBar only_back={true} />
                     <img className="more_icon" src={require('../../../static/img/more_info.png')} />
-                    <div className="more_wrap">
-                        <div className="item_wrap">
+                    <div className="more_dot_wrap">
+                        <div className="more_item_wrap">
                             {song_detail.songName}
                         </div>
-                        <div className="item_wrap">
+                        <div className="more_item_wrap">
+                            <div className="more_dot_icon_love">
+                                
+                            </div>
+                            <div className="more_dot_icon_people">
+
+                            </div>
+                        </div>
+                        <div className="more_item_wrap">
 
                         </div>
-                        <div className="item_wrap">
-
-                        </div>
-                        <div className="item_wrap">
+                        <div className="more_item_wrap" style={{ justifyContent: 'center' }}>
                             取消
                         </div>
                     </div>

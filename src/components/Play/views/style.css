@@ -213,3 +213,27 @@
 .modal_song_item_close {
     width: 1.5rem;
 }
+
+/* 更多操作 */
+.more_dot_wrap {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2;
+}
+.more_item_wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 4rem;
+    border-bottom: 1px solid #fff;
+    padding: 1rem;
+    font-size: 1.4rem;
+}
+.more_dot_icon_love {
+    
+}
+.more_dot_icon_people {
+
+}
