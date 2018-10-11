@@ -1,4 +1,5 @@
 import view from './views';
 import * as action from './action';
 import PlayListState from './reducer';
-export { view, action, PlayListState };
+import LikeSongsListState from './likeSongs.reducer';
+export { view, action, PlayListState, LikeSongsListState };

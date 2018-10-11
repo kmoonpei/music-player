@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './style.css';
 import API from '../../../utils/API';
 import HeadBar from '../../../common/HeadBar';
@@ -6,6 +7,7 @@ import { Swiper, Slide } from 'react-dynamic-swiper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { action as PlayListAction } from '../index';
+import * as LikeSongsAction from '../likeSongs.action';
 
 
 const contral_btn = [
@@ -21,14 +23,27 @@ class Play extends Component {
             song_detail: {},//当前播放歌曲信息
             modal_song_list: [],//播放列表
             show_modal_songlist: false,
+            show_modal_more: false,
+            is_like: false,//是否喜欢
         }
         this.clearAllPlayList = this.clearAllPlayList.bind(this)
+        this.clickLike = this.clickLike.bind(this)
     }
 
     componentWillMount() {
         this.getData()
         this.setState({ modal_song_list: this.props.PlayListState.list })
         console.log('播放列表：', this.props.PlayListState.list)
+        let hash = this.props.location.state.hash
+        let { list } = this.props.LikeSongsListState
+        let tag = false
+        list.forEach(element => {
+            if (element.hash == hash) {
+                tag = true
+                return
+            }
+        });
+        this.setState({ is_like: tag })
     }
 
     //获取当前播放歌曲信息和歌词
@@ -68,9 +83,30 @@ class Play extends Component {
     openModalSongList(tag) {
         this.setState({ show_modal_songlist: tag })
     }
-
+    //打开更多
+    openModalMore(tag) {
+        this.setState({ show_modal_more: tag })
+    }
+    //添加喜欢列表
+    clickLike() {
+        let { is_like, song_detail } = this.state
+        let { list } = this.props.LikeSongsListState
+        let hash = this.props.location.state.hash
+        this.setState({ is_like: !is_like })
+        let arr = list
+        if (!is_like) {
+            arr.push({ filename: song_detail.fileName, hash: song_detail.hash })
+        } else {
+            arr = list.map((item) => {
+                if (item.hash !== hash) {
+                    return item
+                }
+            })
+        }
+        this.props.LikeSongsActions.LikeSongsAction('LikeSongs', { list: arr })
+    }
     render() {
-        let { song_detail, lyrics, modal_song_list } = this.state
+        let { song_detail, lyrics, modal_song_list, is_like } = this.state
         let albumImg = `${song_detail.imgUrl}`.replace(/\{size\}/g, 400)
 
         return (
@@ -78,30 +114,34 @@ class Play extends Component {
                 <div className="container_bg" style={{ backgroundImage: `url(${albumImg})` }}></div>
                 <div className="container_play" >
                     <HeadBar only_back={true} />
-                    <img className="more_icon" src={require('../../../static/img/more_info.png')} />
-                    <div className="more_dot_wrap">
+                    <img className="more_icon" alt={'更多'} src={require('../../../static/img/more_info.png')} onClick={this.openModalMore.bind(this, true)} />
+                    {this.state.show_modal_more ? <div className="more_dot_wrap">
                         <div className="more_item_wrap">
                             {song_detail.songName}
                         </div>
                         <div className="more_item_wrap">
-                            <div className="more_dot_icon_love">
-                                
+                            <div className="more_dot_icon_wrap">
+                                <img className="more_dot_icon_love" onClick={this.clickLike} src={is_like ? require('../../../static/img/love.png') : require('../../../static/img/whitelove.png')} />
                             </div>
-                            <div className="more_dot_icon_people">
-
+                            <div className="more_dot_icon_wrap">
+                                <Link to={{ pathname: `/play/singer`, state: { singerId: song_detail.singerId } }} >
+                                    <img className="more_dot_icon_people" src={require('../../../static/img/people.png')} />
+                                </Link>
                             </div>
                         </div>
                         <div className="more_item_wrap">
-
+                            <img className="more_dot_icon_voice" src={require('../../../static/img/voice.png')} />
+                            <div className="more_dot_voice_bar">
+                                <div className="more_dot_voice_now"></div>
+                                <div className="more_dot_voice_dot"></div>
+                            </div>
                         </div>
-                        <div className="more_item_wrap" style={{ justifyContent: 'center' }}>
-                            取消
-                        </div>
-                    </div>
+                        <div className="more_item_wrap" style={{ justifyContent: 'center' }} onClick={this.openModalMore.bind(this, false)}>取消</div>
+                    </div> : null}
                     {this.state.show_modal_songlist ? <div className="modal_song_wrap">
                         <div className="modal_song_title">
                             <img onClick={this.openModalSongList.bind(this, false)} className="modal_song_close" src={require('../../../static/img/delete.png')} />
-                            <span className="modal_song_tit">播放列表({1})首</span>
+                            <span className="modal_song_tit">播放列表({modal_song_list.length})首</span>
                             <span className="modal_song_delt" onClick={this.clearAllPlayList}>清除</span>
                         </div>
                         <ul className="modal_song_list_wrap">
@@ -170,6 +210,7 @@ const mapStateToProps = (state) => (state);
 const mapDispatchToProps = (dispatch) => {
     return {
         PlayListActions: bindActionCreators(PlayListAction, dispatch),
+        LikeSongsActions: bindActionCreators(LikeSongsAction, dispatch),
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Play); 

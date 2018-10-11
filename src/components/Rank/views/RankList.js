@@ -46,11 +46,16 @@ export class RankList extends Component {
                 <div className="rank_info_wrap_top" style={{ backgroundImage: `url(${cover_imgurl})` }}>
                     <p>{`更新时间：${this.timeFormat(update_time)}`}</p>
                 </div>
-                <AllAddToPlayList list={song_list}/>
-                <SongList
-                    list={song_list}
-                    is_rank={true}
-                />
+                <AllAddToPlayList list={song_list} />
+                <ul className="new_song_wrap">
+                    {song_list.map((item, i) => {
+                       return (
+                            <li key={i}>
+                                <SongList item={item} i={i} is_rank={true} />
+                            </li>
+                        )
+                    })}
+                </ul> 
             </div>
         )
     }

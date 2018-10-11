@@ -52,10 +52,19 @@ export class Album extends Component {
                     </div>
                     <AllAddToPlayList list={song_list} />
                 </div>
-                <SongList
+                {/* <SongList
                     list={song_list}
                     is_remark={true}
-                />
+                /> */}
+                <ul className="new_song_wrap">
+                    {song_list.map((item, i) => {
+                        return (
+                            <li key={i}>
+                                <SongList item={item} is_remark={true} i={i} />
+                            </li>
+                        )
+                    })}
+                </ul>
             </div>
         )
     }

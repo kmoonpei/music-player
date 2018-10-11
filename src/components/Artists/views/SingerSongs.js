@@ -66,7 +66,15 @@ class SingerSongs extends Component {
                 <div onClick={this.addToList} className="singersongs_cover_wrap" style={{ backgroundImage: `url(${singer_img})` }}>
                     <img className="singersongs_play" src={require('../../../static/img/play.png')} />
                 </div>
-                <SongList list={songs} />
+                <ul className="new_song_wrap">
+                    {songs.map((item, i) => {
+                        return (
+                            <li key={i}>
+                                <SongList item={item} i={i} />
+                            </li>
+                        )
+                    })}
+                </ul>
             </div>
         )
     }

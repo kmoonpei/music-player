@@ -114,10 +114,8 @@ a {
 }
 .like{
   display: block;
-  width: 3rem;
-  height: 3rem;
-  background: 50% 50% url(../img/notlove.png) no-repeat;
-  background-size: 60%;
+  width: 2rem;
+  height: 2rem;
 }
 
 

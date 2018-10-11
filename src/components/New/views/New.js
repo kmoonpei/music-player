@@ -27,8 +27,15 @@ export default class extends Component {
     render() {
         let { new_songs } = this.state
         return (
-            <SongList
-                list={new_songs} />
+            <ul className="new_song_wrap">
+                {new_songs.map((item, i) => {
+                    return (
+                        <li key={i}>
+                            <SongList item={item} i={i} />
+                        </li>
+                    )
+                })}
+            </ul>
         )
     }
 }

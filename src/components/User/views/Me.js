@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HeadBar from '../../../common/HeadBar';
 import './style.css';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Me extends Component {
@@ -19,8 +20,10 @@ class Me extends Component {
                     <p>{`当前用户：${this.props.loginState.name}`}</p>
                 </div>
                 <div className="item_wrap">
-                    <span>我的收藏列表</span>
-                    <img src={require('../../../static/img/arrow.png')} />
+                    <Link to={`/user/love`}>
+                        <span>我的收藏列表</span>
+                        <img src={require('../../../static/img/arrow.png')} />
+                    </Link>
                 </div>
                 <div className="item_wrap">
                     <span>开发者：kmoonpei</span>

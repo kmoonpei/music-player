@@ -35,7 +35,15 @@ export class SearchTag extends Component {
         return (
             <div>
                 <HeadBar title={this.props.location.state.searchValue} all_in_btn={true} />
-                <SongList list={data_arr} />
+                <ul className="new_song_wrap">
+                    {data_arr.map((item, i) => {
+                        return (
+                            <li key={i}>
+                                <SongList item={item} i={i} />
+                            </li>
+                        )
+                    })}
+                </ul>
             </div>
         )
     }

@@ -15,6 +15,8 @@ import SingerSongs from '../components/Artists/views/SingerSongs';
 import Search from '../components/Search/views/index';
 import { SearchTag } from '../components/Search/views/searchtag';
 import Play from '../components/Play/views';
+import SingerPage from '../components/Play/views/SingerPage';
+import LikeSongs from '../components/User/views/likeSongs';
 
 const Routes = () => (
     <Router >
@@ -29,10 +31,12 @@ const Routes = () => (
                 <Route path='/artists/list/singersongs/:id' component={SingerSongs} />
                 <Route path="/album" exact component={AlbumList} />
                 <Route path="/album/:id" component={Album} />
-                <Route path="/user" component={User} />
+                <Route path="/user" exact component={User} />
+                <Route path="/user/love" component={LikeSongs} />
                 <Route path="/search" exact component={Search} />
                 <Route path="/search/result" component={SearchTag} />
-                <Route path="/play" component={Play} />
+                <Route path="/play" exact component={Play} />
+                <Route path="/play/singer" component={SingerPage} />
 
 
             </Switch>
