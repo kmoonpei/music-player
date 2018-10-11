@@ -38,13 +38,16 @@ class SongList extends Component {
         let { is_like } = this.state
         let { list } = this.props.LikeSongsListState
         let arr = list
+        let tag
         this.setState({ is_like: !is_like })
         if (is_like) {
-            arr = list.map((it) => {
-                if (item.hash !== it.hash) {
-                    return it
+            arr.forEach((element, i) => {
+                if (element.hash === item.hash) {
+                    tag = i;
+                    return
                 }
-            })
+            });
+            arr.splice(tag, 1)
         } else {
             arr.push({ filename: item.filename, hash: item.hash })
         }

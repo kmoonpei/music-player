@@ -94,14 +94,17 @@ class Play extends Component {
         let hash = this.props.location.state.hash
         this.setState({ is_like: !is_like })
         let arr = list
+        let tag
         if (!is_like) {
             arr.push({ filename: song_detail.fileName, hash: song_detail.hash })
         } else {
-            arr = list.map((item) => {
-                if (item.hash !== hash) {
-                    return item
+            arr.forEach((element, i) => {
+                if (element.hash === hash) {
+                    tag = i;
+                    return
                 }
-            })
+            });
+            arr.splice(tag, 1)
         }
         this.props.LikeSongsActions.LikeSongsAction('LikeSongs', { list: arr })
     }
