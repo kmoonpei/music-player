@@ -21,8 +21,17 @@ class LikeSongs extends Component {
     addToPlay(item) {
         let old_list = this.props.PlayListState.list
         let new_data = { filename: item.filename, hash: item.hash }
-        old_list.push(new_data)
-        this.props.PlayListActions.PlayListAction('SavePlayList', { list: old_list })
+        let tag = true
+        old_list.forEach(element => {
+            if(element.hash==item.hash){
+                tag = false;
+                return
+            }
+        });
+        if(tag){
+            old_list.push(new_data)
+            this.props.PlayListActions.PlayListAction('SavePlayList', { list: old_list })
+        }
     }
     deleteLikeSong(i) {
         let old_list = this.state.like_songs_list
