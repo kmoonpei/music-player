@@ -8,6 +8,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { action as PlayListAction } from '../index';
 import * as LikeSongsAction from '../likeSongs.action';
+import { MusicAction } from '../music.action';
+import * as localStore from '../../../utils/localStorage';
+import { VolumeAction } from '../music.action';
 
 
 const contral_btn = [
@@ -33,7 +36,6 @@ class Play extends Component {
     componentWillMount() {
         this.getData()
         this.setState({ modal_song_list: this.props.PlayListState.list })
-        console.log('播放列表：', this.props.PlayListState.list)
         let hash = this.props.location.state.hash
         let { list } = this.props.LikeSongsListState
         let tag = false
@@ -56,6 +58,7 @@ class Play extends Component {
             let data_lyrics = await res_lyrics.text();
             // console.log('播放歌曲信息', data_song, data_lyrics)
             this.setState({ song_detail: data_song, lyrics: data_lyrics })
+            this.props.MusicActions.MusicAction('music',data_song)
         } catch (err) {
             console.log('Error', err)
         }
@@ -108,6 +111,40 @@ class Play extends Component {
         }
         this.props.LikeSongsActions.LikeSongsAction('LikeSongs', { list: arr })
     }
+
+    handleStart(e) {
+        e.preventDefault();
+        const touchObj1 = e.changedTouches[0];
+        const x = touchObj1.clientX;
+        const l = e.target.offsetLeft;
+        const leftVal = x - l;
+        this.setState({
+            leftVal: leftVal,
+            sliderWidth: this.refs.slider.offsetWidth,
+            barWidth: e.target.offsetWidth,
+        })
+    }
+
+    handleTouchMove(e) {
+        const {leftVal, sliderWidth, barWidth} = this.state;
+        const touchObj2 = e.changedTouches[0];
+        const thisX = touchObj2.clientX;
+        let barLeft = thisX - leftVal;
+        if (barLeft < 0) {
+            barLeft = 0;
+        } else if (barLeft > sliderWidth - barWidth) {
+            barLeft = sliderWidth - barWidth
+        }
+        const currentValue = sliderWidth - barWidth > 0 ? (barLeft / ( sliderWidth - barWidth)).toFixed(2) : 0.5;
+        if (currentValue >= 0 && currentValue <= 1) {
+            parseFloat(currentValue) === 0 ? this.setState({volumed: false}) : this.setState({volumed: true});
+            this.props.musicInfoActions.volumeControl({volume: parseFloat(currentValue)});
+            localStore.setItem('currentVolume', currentValue);
+        } else {
+            this.props.musicInfoActions.volumeControl({volume: 0.5});
+        }
+        this.setState({progress: barLeft + 'px'});
+    }
     render() {
         let { song_detail, lyrics, modal_song_list, is_like } = this.state
         let albumImg = `${song_detail.imgUrl}`.replace(/\{size\}/g, 400)
@@ -135,8 +172,12 @@ class Play extends Component {
                         <div className="more_item_wrap">
                             <img className="more_dot_icon_voice" src={require('../../../static/img/voice.png')} />
                             <div className="more_dot_voice_bar">
-                                <div className="more_dot_voice_now"></div>
-                                <div className="more_dot_voice_dot"></div>
+                                <div className="more_dot_voice_now" style={{width: '10%'}}></div>
+                                <div className="more_dot_voice_dot"
+                                    style={{left: this.state.progress}}
+                                    onTouchStart={this.handleStart.bind(this)}
+                                    onTouchMove={this.handleTouchMove.bind(this)}>
+                                </div>
                             </div>
                         </div>
                         <div className="more_item_wrap" style={{ justifyContent: 'center' }} onClick={this.openModalMore.bind(this, false)}>取消</div>
@@ -214,6 +255,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         PlayListActions: bindActionCreators(PlayListAction, dispatch),
         LikeSongsActions: bindActionCreators(LikeSongsAction, dispatch),
+        MusicActions: bindActionCreators(MusicAction, dispatch),
+        VolumeActions: bindActionCreators(VolumeAction, dispatch),
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Play); 

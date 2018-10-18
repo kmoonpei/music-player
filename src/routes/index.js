@@ -17,10 +17,12 @@ import { SearchTag } from '../components/Search/views/searchtag';
 import Play from '../components/Play/views';
 import SingerPage from '../components/Play/views/SingerPage';
 import LikeSongs from '../components/User/views/likeSongs';
+import Player from '../components/Play/views/player';
 
 const Routes = () => (
     <Router >
         <div>
+            <Player/>
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/new" component={New} />
