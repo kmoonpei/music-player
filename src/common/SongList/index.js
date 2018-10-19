@@ -68,7 +68,7 @@ class SongList extends Component {
         return (
             <div className="song_item_wrap">
                 {this.is_rank ? <span className="rank_circle">{i + 1}</span> : null}
-                <Link to={{ pathname: '/play', state: item }} onClick={this.addToPlay.bind(this, item)} className="song_name_wrap">
+                <Link to={{ pathname: '/play/#' + item.hash, state: item }} onClick={this.addToPlay.bind(this, item)} className="song_name_wrap">
                     <p className="song_name">{item.filename}</p>
                     {this.is_remark ? <p className="song_album">{item.remark}</p> : null}
                 </Link>

@@ -37,8 +37,8 @@ const Routes = () => (
                 <Route path="/user/love" component={LikeSongs} />
                 <Route path="/search" exact component={Search} />
                 <Route path="/search/result" component={SearchTag} />
-                <Route path="/play" exact component={Play} />
-                <Route path="/play/singer" component={SingerPage} />
+                <Route path="/play"  component={Play} />
+                <Route path="/singer" component={SingerPage} />
 
 
             </Switch>

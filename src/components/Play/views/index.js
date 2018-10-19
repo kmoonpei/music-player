@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { action as PlayListAction } from '../index';
 import * as LikeSongsAction from '../likeSongs.action';
-import { MusicAction } from '../music.action';
+import * as MusicAction from '../music.action';
 import * as localStore from '../../../utils/localStorage';
-import { VolumeAction } from '../music.action';
+// import { VolumeAction } from '../music.action';
 
 
 const contral_btn = [
@@ -28,6 +28,7 @@ class Play extends Component {
             show_modal_songlist: false,
             show_modal_more: false,
             is_like: false,//是否喜欢
+            volume: 0.1,//声量
         }
         this.clearAllPlayList = this.clearAllPlayList.bind(this)
         this.clickLike = this.clickLike.bind(this)
@@ -35,7 +36,7 @@ class Play extends Component {
 
     componentWillMount() {
         this.getData()
-        this.setState({ modal_song_list: this.props.PlayListState.list })
+        this.setState({ modal_song_list: this.props.PlayListState.list,volume:this.props.VolumeState})
         let hash = this.props.location.state.hash
         let { list } = this.props.LikeSongsListState
         let tag = false
@@ -46,6 +47,10 @@ class Play extends Component {
             }
         });
         this.setState({ is_like: tag })
+    }
+
+    componentDidMount(){
+        // const hash = this.props.location.hash.replace(/#/, '');
     }
 
     //获取当前播放歌曲信息和歌词
@@ -137,13 +142,23 @@ class Play extends Component {
         }
         const currentValue = sliderWidth - barWidth > 0 ? (barLeft / ( sliderWidth - barWidth)).toFixed(2) : 0.5;
         if (currentValue >= 0 && currentValue <= 1) {
-            parseFloat(currentValue) === 0 ? this.setState({volumed: false}) : this.setState({volumed: true});
+            (currentValue) === 0 ? this.setState({volumed: false}) : this.setState({volumed: true});
             this.props.musicInfoActions.volumeControl({volume: parseFloat(currentValue)});
             localStore.setItem('currentVolume', currentValue);
         } else {
             this.props.musicInfoActions.volumeControl({volume: 0.5});
         }
         this.setState({progress: barLeft + 'px'});
+    }
+
+    toggleVolume(){
+        console.log('props.volume:',this.props.VolumeState)
+        let vol = this.state.volume+0.1
+        if(vol>=0&&vol<=1){
+            this.setState({volume: vol})
+            this.props.MusicActions.VolumeAction('volume',vol)
+            localStore.setItem('currentVolume', vol);
+        }
     }
     render() {
         let { song_detail, lyrics, modal_song_list, is_like } = this.state
@@ -164,19 +179,20 @@ class Play extends Component {
                                 <img className="more_dot_icon_love" onClick={this.clickLike} src={is_like ? require('../../../static/img/love.png') : require('../../../static/img/whitelove.png')} />
                             </div>
                             <div className="more_dot_icon_wrap">
-                                <Link to={{ pathname: `/play/singer`, state: { singerId: song_detail.singerId } }} >
+                                <Link to={{ pathname: `/singer`, state: { singerId: song_detail.singerId } }} >
                                     <img className="more_dot_icon_people" src={require('../../../static/img/people.png')} />
                                 </Link>
                             </div>
                         </div>
                         <div className="more_item_wrap">
-                            <img className="more_dot_icon_voice" src={require('../../../static/img/voice.png')} />
+                            <img className="more_dot_icon_voice" src={require('../../../static/img/voice.png')} onClick={this.toggleVolume.bind(this)} />
                             <div className="more_dot_voice_bar">
-                                <div className="more_dot_voice_now" style={{width: '10%'}}></div>
+                                <div className="more_dot_voice_now" style={{width: `${(this.state.volume*100)}%`}}></div>
                                 <div className="more_dot_voice_dot"
-                                    style={{left: this.state.progress}}
-                                    onTouchStart={this.handleStart.bind(this)}
-                                    onTouchMove={this.handleTouchMove.bind(this)}>
+                                    // style={{left: this.state.progress}}
+                                    // onTouchStart={this.handleStart.bind(this)}
+                                    // onTouchMove={this.handleTouchMove.bind(this)}
+                                >
                                 </div>
                             </div>
                         </div>
@@ -256,7 +272,6 @@ const mapDispatchToProps = (dispatch) => {
         PlayListActions: bindActionCreators(PlayListAction, dispatch),
         LikeSongsActions: bindActionCreators(LikeSongsAction, dispatch),
         MusicActions: bindActionCreators(MusicAction, dispatch),
-        VolumeActions: bindActionCreators(VolumeAction, dispatch),
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Play); 

@@ -3,7 +3,7 @@ const MusicAction = (kind, data) => {
     switch (kind) {
         case 'music':
             return {
-                type: types.MUSICVOICE,
+                type: types.MUSIC,
                 data: data
             };
             break;

@@ -6,5 +6,5 @@ export const HOTWORD = "HOTWORD";
 export const SEARCHWORD = "SEARCHWORD";
 export const PLAYLIST = "PLAYLIST";//播放列表
 export const LIKESONGS = "LIKESONGS";//播放列表
-export const MUSICVOICE = 'MUSICVOICE'//歌曲
+export const MUSIC = 'MUSIC'//歌曲
 export const VOLUME = 'VOLUME'//声量
