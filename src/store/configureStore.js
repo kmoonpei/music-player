@@ -7,7 +7,7 @@ import { Artists } from "../components/Artists";
 import { HotSearch } from "../components/Search";
 import { PlayListState } from "../components/Play";
 import { LikeSongsListState } from "../components/Play";
-import { MusicState, VolumeState } from "./../components/Play/music.reducer";
+import { MusicState, VolumeState, FavorState,IsPlayState } from "./../components/Play/music.reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducers = combineReducers({
@@ -19,7 +19,9 @@ const reducers = combineReducers({
   PlayListState,
   LikeSongsListState,
   MusicState,
-  VolumeState
+  VolumeState,
+  FavorState,
+  IsPlayState
 });
 const configuretore = initialState => {
   return createStore(

@@ -11,6 +11,7 @@ import * as LikeSongsAction from '../likeSongs.action';
 import * as MusicAction from '../music.action';
 import * as localStore from '../../../utils/localStorage';
 // import { VolumeAction } from '../music.action';
+import LikeSongsListState from './../likeSongs.reducer';
 
 
 const contral_btn = [
@@ -23,11 +24,9 @@ class Play extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            song_detail: {},//当前播放歌曲信息
             modal_song_list: [],//播放列表
             show_modal_songlist: false,
             show_modal_more: false,
-            is_like: false,//是否喜欢
             volume: 0.1,//声量
         }
         this.clearAllPlayList = this.clearAllPlayList.bind(this)
@@ -35,39 +34,13 @@ class Play extends Component {
     }
 
     componentWillMount() {
-        this.getData()
+        this.props.MusicActions.FetchMusic(this.props.location.state.hash,this.props.LikeSongsListState.list)
         this.setState({ modal_song_list: this.props.PlayListState.list,volume:this.props.VolumeState})
         let hash = this.props.location.state.hash
         let { list } = this.props.LikeSongsListState
-        let tag = false
-        list.forEach(element => {
-            if (element.hash == hash) {
-                tag = true
-                return
-            }
-        });
-        this.setState({ is_like: tag })
+        
     }
 
-    componentDidMount(){
-        // const hash = this.props.location.hash.replace(/#/, '');
-    }
-
-    //获取当前播放歌曲信息和歌词
-    async getData() {
-        let hash = this.props.location.state.hash
-        try {
-            let res_song = await fetch(`/kugou${API.song_detail}?cmd=playInfo&hash=${hash}`);
-            let data_song = await res_song.json();
-            let res_lyrics = await fetch(`/kugou${API.song_lyrics}?cmd=100&hash=${hash}&timelength=${data_song.timeLength}`);
-            let data_lyrics = await res_lyrics.text();
-            // console.log('播放歌曲信息', data_song, data_lyrics)
-            this.setState({ song_detail: data_song, lyrics: data_lyrics })
-            this.props.MusicActions.MusicAction('music',data_song)
-        } catch (err) {
-            console.log('Error', err)
-        }
-    }
 
     //清空播放列表
     clearAllPlayList() {
@@ -83,9 +56,41 @@ class Play extends Component {
     }
 
     handleClick(i) {
-        if (i === 3) {
-            this.openModalSongList(true)
+        let play_list = this.props.PlayListState.list
+        let now_song_hash =  this.props.MusicState.song.hash
+        let tag
+        switch (i) {
+            case 3:
+                this.openModalSongList(true);
+            break;
+            case 0:
+                play_list.forEach((ele,i)=>{
+                    if(ele.hash === now_song_hash){
+                        if(i === 0){
+                            tag = play_list.length - 1
+                        }else{
+                            tag = i - 1
+                        }
+                        this.props.MusicActions.FetchMusic(play_list[tag].hash,this.props.LikeSongsListState.list)
+                    }
+                })
+
+            break;
+            case 2:
+                play_list.forEach((ele,i)=>{
+                    if(ele.hash === now_song_hash){
+                        if(i === play_list.length - 1){
+                            tag = 0
+                        }else{
+                            tag = i + 1
+                        }
+                        this.props.MusicActions.FetchMusic(play_list[tag].hash,this.props.LikeSongsListState.list)
+                    }
+                })
+
+            break;
         }
+        
     }
     //打开播放列表
     openModalSongList(tag) {
@@ -97,10 +102,10 @@ class Play extends Component {
     }
     //添加喜欢列表
     clickLike() {
-        let { is_like, song_detail } = this.state
+        let song_detail = this.props.MusicState.song
+        let is_like = this.props.FavorState
         let { list } = this.props.LikeSongsListState
         let hash = this.props.location.state.hash
-        this.setState({ is_like: !is_like })
         let arr = list
         let tag
         if (!is_like) {
@@ -115,6 +120,8 @@ class Play extends Component {
             arr.splice(tag, 1)
         }
         this.props.LikeSongsActions.LikeSongsAction('LikeSongs', { list: arr })
+        this.props.MusicActions.TofavorAction(!is_like)
+
     }
 
     handleStart(e) {
@@ -160,10 +167,17 @@ class Play extends Component {
             localStore.setItem('currentVolume', vol);
         }
     }
-    render() {
-        let { song_detail, lyrics, modal_song_list, is_like } = this.state
-        let albumImg = `${song_detail.imgUrl}`.replace(/\{size\}/g, 400)
 
+    PlaySong(item){
+        this.props.MusicActions.FetchMusic(item.hash,this.props.LikeSongsListState.list)
+    }
+    render() {
+        let { modal_song_list } = this.state
+        let song_detail = this.props.MusicState.song
+        let lyrics = this.props.MusicState.lyrics
+        let is_like = this.props.FavorState
+        let albumImg = `${song_detail?song_detail.imgUrl:null}`.replace(/\{size\}/g, 400)
+        if(song_detail){
         return (
             <div className="play_container">
                 <div className="container_bg" style={{ backgroundImage: `url(${albumImg})` }}></div>
@@ -172,14 +186,14 @@ class Play extends Component {
                     <img className="more_icon" alt={'更多'} src={require('../../../static/img/more_info.png')} onClick={this.openModalMore.bind(this, true)} />
                     {this.state.show_modal_more ? <div className="more_dot_wrap">
                         <div className="more_item_wrap">
-                            {song_detail.songName}
+                            {song_detail?song_detail.songName:''}
                         </div>
                         <div className="more_item_wrap">
                             <div className="more_dot_icon_wrap">
                                 <img className="more_dot_icon_love" onClick={this.clickLike} src={is_like ? require('../../../static/img/love.png') : require('../../../static/img/whitelove.png')} />
                             </div>
                             <div className="more_dot_icon_wrap">
-                                <Link to={{ pathname: `/singer`, state: { singerId: song_detail.singerId } }} >
+                                <Link to={{ pathname: `/singer`, state: { singerId: song_detail?song_detail.singerId:null } }} >
                                     <img className="more_dot_icon_people" src={require('../../../static/img/people.png')} />
                                 </Link>
                             </div>
@@ -206,8 +220,13 @@ class Play extends Component {
                         </div>
                         <ul className="modal_song_list_wrap">
                             {modal_song_list.map((item, i) => {
+                                let play_color='#555'
+                                let now_song = this.props.MusicState.song
+                                if(now_song.hash === item.hash){
+                                    play_color = '#f00'
+                                }
                                 return <li className="modal_song_item_wrap" key={i}>
-                                    <span className="modal_song_name">{item.filename}</span>
+                                    <span className="modal_song_name" onClick={this.PlaySong.bind(this,item)} style={{color:play_color}}>{item.filename}</span>
                                     <img className="modal_song_item_close" onClick={() => { this.deleteOneSong(i) }} src={require('../../../static/img/delete.png')} />
                                 </li>
                             })}
@@ -252,9 +271,16 @@ class Play extends Component {
                                     if (i === 0) {
                                         rotate = 180
                                     }
+                                    let img = 'pause.png'
+                                    if(this.props.IsPlayState){
+                                        img = 'play.png'
+                                    }
                                     return <div key={i} className="item_btn_wrap">
                                         <div key={i} className="item_btn" onClick={this.handleClick.bind(this, i)}>
-                                            <img className="item_img" style={{ transform: `rotateY(${rotate}deg)` }} src={require(`../../../static/img/${item.img}`)} />
+                                            {
+                                                i !== 1 ? <img className="item_img" style={{ transform: `rotateY(${rotate}deg)` }} src={require(`../../../static/img/${item.img}`)} />:
+                                                <img className="item_img"src={require(`../../../static/img/${img}`)} />
+                                            }
                                         </div>
                                     </div>
                                 })}
@@ -264,6 +290,9 @@ class Play extends Component {
                 </div>
             </div>
         )
+    }else{
+        return null
+    }
     }
 }
 const mapStateToProps = (state) => (state);
