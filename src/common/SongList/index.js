@@ -30,10 +30,10 @@ class SongList extends Component {
     }
     addToPlay(item) {
         let old_list = this.props.PlayListState.list
-        let new_data = { filename: item.filename, hash: item.hash }
+        let new_data = { filename: item.filename, hash: item.hash.toUpperCase() }
         let tag = true
         old_list.forEach(element => {
-            if(element.hash==item.hash){
+            if(element.hash==item.hash.toUpperCase()){
                 tag=false
                 return
             }

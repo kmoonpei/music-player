@@ -322,3 +322,36 @@
     color: #555;
     margin: 1rem;
 }
+
+/* 歌词样式 */
+.lyric {
+    position: relative;
+    overflow: hidden;
+    font-size: 14px;
+}
+.originLyric {
+    padding-bottom: 20px;
+    width: 100%;
+    transition: all 0.25s ease 0.05s;
+}
+.line {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+on { 
+    color: rgb(233, 32, 61);
+}
+
+/* .lyric {
+ 
+    .originLyric {
+        padding: nth($d, 3) nth($d, 5);
+
+    }
+} */

@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { action as PlayListAction } from '../index';
 import * as LikeSongsAction from '../likeSongs.action';
-import * as MusicAction from '../music.action';
+import * as Actions from '../music.action';
 import * as localStore from '../../../utils/localStorage';
-// import { VolumeAction } from '../music.action';
 import LikeSongsListState from './../likeSongs.reducer';
+import {formatTime} from '../../../utils/tools';
 
 
 const contral_btn = [
@@ -24,40 +24,45 @@ class Play extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal_song_list: [],//播放列表
             show_modal_songlist: false,
             show_modal_more: false,
-            volume: 0.1,//声量
         }
         this.clearAllPlayList = this.clearAllPlayList.bind(this)
         this.clickLike = this.clickLike.bind(this)
+        this.onChange = this.onChange.bind(this)
+    }
+    static defaultProps = {
+        height: 38,// 歌词每行高度
+        background: '-webkit-linear-gradient(#e9203d, #e9203d) no-repeat, #ddd',
     }
 
     componentWillMount() {
+        console.log('搜索的hash：',this.props.location.state)
         this.props.MusicActions.FetchMusic(this.props.location.state.hash,this.props.LikeSongsListState.list)
-        this.setState({ modal_song_list: this.props.PlayListState.list,volume:this.props.VolumeState})
-        let hash = this.props.location.state.hash
-        let { list } = this.props.LikeSongsListState
-        
     }
-
 
     //清空播放列表
     clearAllPlayList() {
-        this.setState({ modal_song_list: [] })
         this.props.PlayListActions.PlayListAction('SavePlayList', { list: [] })
     }
 
     //在播放列表中删除某首歌
-    deleteOneSong(i) {
+    deleteOneSong(item, i) {
         let arr = this.props.PlayListState.list
         arr.splice(i, 1);
         this.props.PlayListActions.PlayListAction('SavePlayList', { list: arr })
+        let tag = i
+        if(i===arr.length){
+            tag = 0
+        }
+        this.props.MusicActions.FetchMusic(arr[tag].hash,arr)
     }
 
     handleClick(i) {
         let play_list = this.props.PlayListState.list
         let now_song_hash =  this.props.MusicState.song.hash
+        console.log('需替换歌曲下一首时：',now_song_hash)
+
         let tag
         switch (i) {
             case 3:
@@ -88,6 +93,10 @@ class Play extends Component {
                     }
                 })
 
+            break;
+            case 1:
+                let is_play = this.props.IsPlayState
+                this.props.MusicActions.ToPlay(!is_play)
             break;
         }
         
@@ -162,7 +171,6 @@ class Play extends Component {
         console.log('props.volume:',this.props.VolumeState)
         let vol = this.state.volume+0.1
         if(vol>=0&&vol<=1){
-            this.setState({volume: vol})
             this.props.MusicActions.VolumeAction('volume',vol)
             localStore.setItem('currentVolume', vol);
         }
@@ -171,12 +179,22 @@ class Play extends Component {
     PlaySong(item){
         this.props.MusicActions.FetchMusic(item.hash,this.props.LikeSongsListState.list)
     }
+
+    onChange(e) {
+        this.props.MusicActions.ToPlay({playing: true});
+        this.props.audio.player.seekTo(parseFloat(e.target.value));
+    }
     render() {
-        let { modal_song_list } = this.state
+        let modal_song_list = this.props.PlayListState.list
         let song_detail = this.props.MusicState.song
         let lyrics = this.props.MusicState.lyrics
         let is_like = this.props.FavorState
+        let volume = this.props.VolumeState
+        const currentTime = formatTime(this.props.progress.currentTime);
         let albumImg = `${song_detail?song_detail.imgUrl:null}`.replace(/\{size\}/g, 400)
+        const percentage = this.props.progress.percentage;
+        const rangeStyle = percentage * 100 + '%' + ' ' + '100%';
+        const duration = formatTime(localStore.getItem('duration'));
         if(song_detail){
         return (
             <div className="play_container">
@@ -201,7 +219,7 @@ class Play extends Component {
                         <div className="more_item_wrap">
                             <img className="more_dot_icon_voice" src={require('../../../static/img/voice.png')} onClick={this.toggleVolume.bind(this)} />
                             <div className="more_dot_voice_bar">
-                                <div className="more_dot_voice_now" style={{width: `${(this.state.volume*100)}%`}}></div>
+                                <div className="more_dot_voice_now" style={{width: `${(volume*100)}%`}}></div>
                                 <div className="more_dot_voice_dot"
                                     // style={{left: this.state.progress}}
                                     // onTouchStart={this.handleStart.bind(this)}
@@ -227,7 +245,7 @@ class Play extends Component {
                                 }
                                 return <li className="modal_song_item_wrap" key={i}>
                                     <span className="modal_song_name" onClick={this.PlaySong.bind(this,item)} style={{color:play_color}}>{item.filename}</span>
-                                    <img className="modal_song_item_close" onClick={() => { this.deleteOneSong(i) }} src={require('../../../static/img/delete.png')} />
+                                    <img className="modal_song_item_close" onClick={() => { this.deleteOneSong(item,i) }} src={require('../../../static/img/delete.png')} />
                                 </li>
                             })}
                         </ul>
@@ -246,24 +264,34 @@ class Play extends Component {
                             >
                                 <Slide className="Demo_swiper_slide" >
                                     <div className="rotate_cover">
-                                        <div className="img_cover_wrap" style={{ background: `url(${albumImg}) center / cover` }}>
+                                        <div className="img_cover_wrap" style={{ background: `url(${albumImg}) center / cover`,animationPlayState: this.props.IsPlayState?'running':'paused' }}>
                                             <div className="img_cover"></div>
                                         </div>
                                     </div>
                                 </Slide>
                                 <Slide className="Demo_swiper_slide"  >
-                                    <div className="lyric_wrap">{lyrics}</div>
+                                    <div className="lyric">
+                                        <div className="originLyric" style={{transform: 'translateY(-' + this.props.LyricsUpdate.index * this.props.height + 'px)'}}>
+                                            {lyrics.map((ele, index) => {
+                                                console.log('歌词index：',this.props.LyricsUpdate.index )
+                                                return <p key={index} id={`line-${index}`} style={{height: this.props.height + 'px'}}
+                                                   className={this.props.LyricsUpdate.time === ele[0] ? 'line on' : 'line'}>
+                                                    {ele[1]}
+                                                </p>
+                                            })}
+                                        </div>
+                                    </div>
                                 </Slide>
                             </Swiper>
                         </div>
                         <div className="play_contral">
                             <div className="profress_bar">
-                                <div className="time_left">01:23</div>
+                                <div className="time_left">{currentTime}</div>
                                 <div className="time_bar">
-                                    <input type="range" step="any" min="0" max="1" value="0.4"
-                                        style={{}} />
+                                    <input type='range' min={0} max={1} step='any' value={percentage || '0'}
+                                        style={{background: this.props.background, backgroundSize: rangeStyle}} onChange={this.onChange}/>
                                 </div>
-                                <div className="time_right">03:47</div>
+                                <div className="time_right">{duration}</div>
                             </div>
                             <div className="contral_btn">
                                 {contral_btn.map((item, i) => {
@@ -271,9 +299,9 @@ class Play extends Component {
                                     if (i === 0) {
                                         rotate = 180
                                     }
-                                    let img = 'pause.png'
+                                    let img = 'start.png'
                                     if(this.props.IsPlayState){
-                                        img = 'play.png'
+                                        img = 'pause.png'
                                     }
                                     return <div key={i} className="item_btn_wrap">
                                         <div key={i} className="item_btn" onClick={this.handleClick.bind(this, i)}>
@@ -300,7 +328,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         PlayListActions: bindActionCreators(PlayListAction, dispatch),
         LikeSongsActions: bindActionCreators(LikeSongsAction, dispatch),
-        MusicActions: bindActionCreators(MusicAction, dispatch),
+        MusicActions: bindActionCreators(Actions, dispatch),
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Play); 

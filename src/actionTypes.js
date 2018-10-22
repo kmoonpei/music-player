@@ -10,3 +10,6 @@ export const MUSIC = 'MUSIC';//歌曲
 export const VOLUME = 'VOLUME';//声量
 export const ISFAVOR = 'ISFAVOR';//当前播放歌曲是否标记为喜爱
 export const ISPLAY = 'ISPLAY';//当前是否播放
+export const PROGRESS = 'PROGRESS';//播放进度
+export const UPDATELYRIC = 'UPDATELYRIC';//同步歌词
+export const AUDIOOBJ = 'AUDIOOBJ';//声音对象
